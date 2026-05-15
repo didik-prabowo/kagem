@@ -2,6 +2,8 @@
 
 Personal browser-based toolkit for daily development needs. Built with Next.js, runs locally or over LAN.
 
+![Dev Toolkit](docs/screenshots/preview.png)
+
 ## Tools
 
 **Comparators**
