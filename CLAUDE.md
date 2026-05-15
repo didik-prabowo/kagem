@@ -96,3 +96,45 @@ All logic in `src/components/SqlFormatter.tsx`. Uses the `sql-formatter` npm pac
 - Left toolbar: icon buttons (Format, Minify, | Paste, Use example, Clear) + char count — same `IconBtn` pattern as JSON Formatter.
 - Right toolbar: icon Copy button only.
 - Clipboard fallback same pattern as other tools.
+
+### JWT Decoder / Encoder (`/jwt`)
+
+All logic in `src/components/JwtTool.tsx`. Two tabs: **Decoder** and **Encoder**.
+
+**Decoder tab:**
+- Splits token on `.`, base64url-decodes header + payload via `b64urlDecode()` (UTF-8 safe, uses `TextDecoder`).
+- Displays Header and Payload as formatted JSON; signature shown as raw base64url string.
+- Status badge: Valid / Expired / Not yet valid — derived from `exp`/`nbf` claims.
+- Timestamps (`iat`, `exp`, `nbf`) formatted as human-readable dates alongside raw values.
+
+**Encoder tab:**
+- Editable header (JSON textarea) + payload (JSON textarea) + secret input.
+- Auto-signs on every change via `useEffect([headerStr, payloadStr, secret])` — synchronous via `crypto-js` (`CryptoJS.HmacSHA256/384/512`). Web Crypto API requires HTTPS and doesn't work over LAN HTTP.
+- Color-coded token output: blue = header, orange = payload, grey = signature.
+- Clears generated token when any input is empty.
+
+**Key detail:** `b64urlDecode/b64urlEncode` handle the `+→-`, `/→_`, padding differences between standard Base64 and JWT's base64url encoding.
+
+### Text Comparator (`/text-comparator`)
+
+All logic in `src/components/TextComparator.tsx`. Uses the `diff` npm package (`diffLines`).
+
+**Layout:** split panel — two stacked textareas (Original top, Modified bottom) on the left; unified diff table on the right.
+
+**Key details:**
+- `buildDiffLines(changes)` tracks `origLine` and `modLine` counters separately, producing rows with both line numbers (one null for added/removed lines).
+- Table: orig# | mod# | sign (+/−/space) | content. Added rows have green bg, removed rows have red bg, unchanged rows are dimmed.
+- Header stats: `+N added`, `−N removed`, `N unchanged`. Shows "✓ Identical" badge when both inputs are non-empty and no diffs.
+
+### .ENV Comparator (`/env-comparator`)
+
+All logic in `src/components/EnvComparator.tsx`.
+
+**Layout:** split panel — two stacked textareas (File A top, File B bottom) on the left; comparison table on the right.
+
+**Key details:**
+- `parseEnv(text)` → `Map<string, string>`: splits on newlines, skips blank lines and `#` comments, strips surrounding quotes from values.
+- `compareEnv(mapA, mapB)` → `EnvEntry[]`: status is `"match"` | `"different"` | `"only-a"` | `"only-b"`. Sorted: different → missing (only-a/only-b) → match, then alphabetical within each group.
+- **Mask values** toggle: shows first 2 chars + up to 6 bullets (`••••••`) for sensitive values. Short values (≤4 chars) fully masked.
+- Header stats: ✓ N (match) ≠ N (different) ← N (only-a) → N (only-b) — counts only shown when non-zero.
+- Status colors follow VS Code Dark+ palette: orange (different), blue (only-a), purple (only-b), dimmed (match).

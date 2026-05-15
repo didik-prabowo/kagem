@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kagem App",
-  description: "Built with Next.js and TypeScript",
+  title: "Dev Toolkit",
+  description: "Personal browser-based toolkit for daily development needs",
+  icons: { icon: "/icon.svg" },
 };
 
 export default function RootLayout({
