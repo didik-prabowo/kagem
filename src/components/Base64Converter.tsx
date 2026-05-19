@@ -77,7 +77,7 @@ export default function Base64Converter() {
       const t = await navigator.clipboard.readText();
       onInput(t);
     } catch {
-      alert("Paste langsung ke input menggunakan Ctrl+V / Cmd+V");
+      alert("Clipboard not accessible over HTTP. Use Ctrl+V / Cmd+V to paste directly.");
     }
   };
 
@@ -181,7 +181,7 @@ export default function Base64Converter() {
           <textarea
             value={input}
             onChange={(e) => onInput(e.target.value)}
-            placeholder={mode === "encode" ? "Ketik atau paste teks di sini..." : "Paste string Base64 di sini..."}
+            placeholder={mode === "encode" ? "Type or paste text here..." : "Paste Base64 string here..."}
             className="flex-1 resize-none outline-none text-sm leading-6 p-4 font-mono"
             style={{ background: "#1e1e1e", color: "#d4d4d4", caretColor: "#d4d4d4" }}
             spellCheck={false}
@@ -211,7 +211,7 @@ export default function Base64Converter() {
             <textarea
               value={output}
               readOnly
-              placeholder="Output akan muncul di sini..."
+              placeholder="Output will appear here..."
               className="flex-1 resize-none outline-none text-sm leading-6 p-4 font-mono"
               style={{ background: "#1a1a1a", color: "#d4d4d4", cursor: "default" }}
               spellCheck={false}

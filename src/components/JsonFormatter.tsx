@@ -665,7 +665,7 @@ export default function JsonFormatter() {
                   background: tab === t ? "#1e1e1e" : "transparent",
                 }}
               >
-                {t === "tree" ? "Tree View" : t === "raw" ? "Raw Output" : "Schema"}
+                {t === "tree" ? "Tree View" : t === "raw" ? "Formatted" : "Schema"}
               </button>
             ))}
           </div>
@@ -708,7 +708,7 @@ export default function JsonFormatter() {
                 ? <AceEditor value={formatted} name="json-output-editor" readOnly />
                 : <div className="absolute inset-0 flex items-center justify-center">
                     <p className="text-xs font-sans" style={{ color: "#4a4a4a" }}>
-                      {!input ? "Output akan muncul di sini" : "JSON tidak valid"}
+                      {!input ? "Output will appear here" : "JSON tidak valid"}
                     </p>
                   </div>
               }
@@ -717,7 +717,7 @@ export default function JsonFormatter() {
             <div className="flex-1 overflow-auto p-4">
               {!input && (
                 <p className="text-xs font-sans" style={{ color: "#4a4a4a" }}>
-                  Output akan muncul di sini
+                  Output will appear here
                 </p>
               )}
               {input && error && (

@@ -210,7 +210,7 @@ export default function JwtTool() {
             <textarea
               value={token}
               onChange={(e) => handleToken(e.target.value)}
-              placeholder="Paste JWT token di sini..."
+              placeholder="Paste JWT token here..."
               className="flex-1 resize-none outline-none text-xs leading-6 p-4 font-mono"
               style={{ background: "#1e1e1e", color: "#ce9178", caretColor: "#d4d4d4", wordBreak: "break-all" }}
               spellCheck={false}
@@ -225,7 +225,7 @@ export default function JwtTool() {
           {/* Right — decoded */}
           <div className="flex flex-col flex-1 overflow-auto p-4 gap-3">
             {!token && (
-              <p className="text-sm font-sans m-auto" style={{ color: "#4a4a4a" }}>Paste JWT token di sebelah kiri</p>
+              <p className="text-sm font-sans m-auto" style={{ color: "#4a4a4a" }}>Paste a JWT token on the left</p>
             )}
             {decoded && (
               <>
@@ -376,7 +376,7 @@ export default function JwtTool() {
               </div>
             ) : (
               <div className="flex-1 flex items-center justify-center">
-                <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Isi header, payload, dan secret di sebelah kiri</p>
+                <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Fill in header, payload, and secret on the left</p>
               </div>
             )}
           </div>

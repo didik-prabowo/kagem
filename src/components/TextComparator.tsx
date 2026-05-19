@@ -128,7 +128,7 @@ export default function TextComparator() {
             <textarea
               value={original}
               onChange={e => setOriginal(e.target.value)}
-              placeholder="Paste teks original di sini..."
+              placeholder="Paste original text here..."
               className="flex-1 resize-none outline-none text-sm leading-6 p-4 font-mono"
               style={{ background: "#1e1e1e", color: "#d4d4d4", caretColor: "#d4d4d4" }}
               spellCheck={false}
@@ -147,7 +147,7 @@ export default function TextComparator() {
             <textarea
               value={modified}
               onChange={e => setModified(e.target.value)}
-              placeholder="Paste teks yang sudah dimodifikasi di sini..."
+              placeholder="Paste modified text here..."
               className="flex-1 resize-none outline-none text-sm leading-6 p-4 font-mono"
               style={{ background: "#1e1e1e", color: "#d4d4d4", caretColor: "#d4d4d4" }}
               spellCheck={false}
@@ -164,7 +164,7 @@ export default function TextComparator() {
 
           {!original && !modified ? (
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Paste teks di sebelah kiri untuk mulai membandingkan</p>
+              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Paste text on the left to start comparing</p>
             </div>
           ) : (
             <div className="flex-1 overflow-auto">

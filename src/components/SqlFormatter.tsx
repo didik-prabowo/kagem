@@ -44,7 +44,7 @@ function tryFormat(sql: string, d: Dialect): { result: string; error: string } {
   try {
     return { result: format(sql, { language: d, keywordCase: "upper", indentStyle: "standard" }), error: "" };
   } catch (e) {
-    return { result: "", error: e instanceof Error ? e.message : "Format gagal" };
+    return { result: "", error: e instanceof Error ? e.message : "Format failed" };
   }
 }
 
@@ -99,7 +99,7 @@ export default function SqlFormatter() {
 
   const doPaste = async () => {
     try { const t = await navigator.clipboard.readText(); handleInput(t); }
-    catch { alert("Paste langsung ke input menggunakan Ctrl+V / Cmd+V"); }
+    catch { alert("Clipboard not accessible over HTTP. Use Ctrl+V / Cmd+V to paste directly."); }
   };
 
   const doClear = () => { setInput(""); setFormatted(""); setError(""); };
@@ -195,7 +195,7 @@ export default function SqlFormatter() {
             </div>
           ) : (
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Ketik atau paste SQL di sebelah kiri, lalu klik Format</p>
+              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Type or paste SQL on the left, then click Format</p>
             </div>
           )}
         </div>

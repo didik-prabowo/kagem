@@ -97,6 +97,63 @@ All logic in `src/components/SqlFormatter.tsx`. Uses the `sql-formatter` npm pac
 - Right toolbar: icon Copy button only.
 - Clipboard fallback same pattern as other tools.
 
+### XML Formatter (`/xml-formatter`)
+
+All logic in `src/components/XmlFormatter.tsx`. Uses the `xml-formatter` npm package. `XmlAceWrapper.tsx` is the Ace wrapper with XML mode (same pattern as `SqlAceWrapper.tsx`).
+
+**Layout:** split panel — `XmlAceWrapper` editor (left) + tabbed output panel (right).
+
+**State:** `input` (left editor) + `formatted` (always the formatted version, right panel). Right panel never reflects minified state — same pattern as SQL Formatter.
+
+**Right panel — tabs:**
+- **Formatted** — read-only `XmlAceWrapper`. Copy button in tab bar.
+- **Tree View** — recursive `XmlTreeNode` component. Parses with `DOMParser`, renders element names (teal), attributes (blue/orange), text content, expand/collapse per node (default open at depth < 3). Closing tag shown when expanded.
+- **Schema** — `XmlSchemaNode` derives schema via `deriveSchema()`: walks the DOM, merges repeated sibling elements into a single entry with a `[N]` count badge. Shows `@attr` entries under each element. Legend row above the tree.
+
+**Key details:**
+- `tryFormat()` wraps `xml-formatter`; errors shown in header bar.
+- `minifyXml()` strips comments and collapses whitespace (regex, no lib).
+- Tab label consistency with JSON Formatter: "Tree View", "Formatted", "Schema".
+
+### Regex Tester (`/regex`)
+
+All logic in `src/components/RegexTester.tsx`. No external dependencies — uses native `RegExp`.
+
+**Layout:** split panel — regex input bar + test string textarea (left) + preview + match table (right).
+
+**Key details:**
+- Regex bar renders `/pattern/flags` style; pattern text turns red on invalid regex.
+- Flag toggles in header: `g` (global), `i` (case insensitive), `m` (multiline), `s` (dotAll). `g` on by default.
+- `getMatches()` runs `RegExp.exec()` in a loop (safety limit: 10 000 iterations); guards against infinite loops on zero-length matches via `re.lastIndex++`.
+- `buildSegments()` splits the test string into highlight/plain segments for the preview panel.
+- Preview: plain text with `<mark>` spans for matches (gold highlight + underline). Match table: index, position (start–end), value, capture groups.
+- Both `getMatches` and `buildSegments` are wrapped in `useMemo`.
+
+### Timestamp Converter (`/timestamp`)
+
+All logic in `src/components/TimestampConverter.tsx`. No external dependencies.
+
+**Layout:** split panel — unix timestamp input + datetime-local input (left) + formatted outputs list (right).
+
+**Key details:**
+- Bidirectional sync: typing in the unix input updates the date picker and vice versa.
+- `isMilliseconds(n)`: timestamps > 9 999 999 999 treated as ms; otherwise seconds. Detected unit shown below input.
+- `buildFormats()` returns 8 rows: Unix (s), Unix (ms), ISO 8601, UTC, Local (with named timezone via `Intl.DateTimeFormat`), Date, Time (UTC), Relative.
+- `relativeTime()` computes human-readable relative string (e.g. "3 hours ago", "in 2 days"); updates every second via `setInterval` in `useEffect`.
+- **Now** button in header fills both inputs with the current time.
+
+### Hash Generator (`/hash`)
+
+All logic in `src/components/HashGenerator.tsx`. Uses `crypto-js` (already a dependency from JWT tool).
+
+**Layout:** split panel — input textarea (left) + hash results list (right).
+
+**Key details:**
+- Computes all 5 algorithms at once on every keystroke: MD5, SHA-1, SHA-256, SHA-384, SHA-512.
+- **HMAC toggle** in header: activates a secret key input; switches all outputs to HMAC variants (`CryptoJS.HmacSHA256` etc.).
+- Each result row: algorithm label + hash value (selectable) + Copy button with "Copied!" feedback.
+- Example: the classic *"The quick brown fox jumps over the lazy dog"* string.
+
 ### JWT Decoder / Encoder (`/jwt`)
 
 All logic in `src/components/JwtTool.tsx`. Two tabs: **Decoder** and **Encoder**.

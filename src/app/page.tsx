@@ -6,14 +6,14 @@ const categories = [
     tools: [
       {
         name: "Text Comparator",
-        description: "Bandingkan dua teks, lihat perbedaan baris per baris",
+        description: "Compare two texts, view line-by-line differences",
         href: "/text-comparator",
         icon: "DIFF",
         color: "#4ec9b0",
       },
       {
         name: ".ENV Comparator",
-        description: "Bandingkan dua file .env, lihat key yang berbeda atau hilang",
+        description: "Compare two .env files, highlight missing or differing keys",
         href: "/env-comparator",
         icon: ".ENV",
         color: "#ce9178",
@@ -24,6 +24,13 @@ const categories = [
     name: "Formatters",
     tools: [
       {
+        name: "XML Formatter",
+        description: "Format & minify XML dengan syntax highlighting",
+        href: "/xml-formatter",
+        icon: "XML",
+        color: "#4ec9b0",
+      },
+      {
         name: "JSON Formatter",
         description: "Format, validate, dan minify JSON",
         href: "/json-formatter",
@@ -32,10 +39,43 @@ const categories = [
       },
       {
         name: "SQL Formatter",
-        description: "Format & minify SQL, support berbagai dialect",
+        description: "Format & minify SQL, supports multiple dialects",
         href: "/sql-formatter",
         icon: "SQL",
         color: "#569cd6",
+      },
+    ],
+  },
+  {
+    name: "Generators",
+    tools: [
+      {
+        name: "Random String Generator",
+        description: "Generate random strings with custom length, charset, and quantity",
+        href: "/random-string",
+        icon: "RNG",
+        color: "#4ec9b0",
+      },
+      {
+        name: "Regex Tester",
+        description: "Test regex patterns in real-time, view matches & capture groups",
+        href: "/regex",
+        icon: ".*",
+        color: "#dcdcaa",
+      },
+      {
+        name: "Timestamp Converter",
+        description: "Unix timestamp ↔ date, auto-detect seconds/milliseconds, relative time",
+        href: "/timestamp",
+        icon: "TS",
+        color: "#569cd6",
+      },
+      {
+        name: "Hash Generator",
+        description: "Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 — support HMAC",
+        href: "/hash",
+        icon: "#",
+        color: "#4ec9b0",
       },
     ],
   },
@@ -59,7 +99,7 @@ const categories = [
       {
         name: "JWT Decoder / Encoder",
         description:
-          "Decode JWT token, lihat claims & expiry, encode dengan secret",
+          "Decode JWT tokens, view claims & expiry, encode with a secret",
         href: "/jwt",
         icon: "JWT",
         color: "#dcdcaa",

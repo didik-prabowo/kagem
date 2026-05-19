@@ -11,14 +11,23 @@ Personal browser-based toolkit for daily development needs. Built with Next.js, 
 | Tool | Route | Description |
 |---|---|---|
 | Text Comparator | `/text-comparator` | Line-by-line diff with added/removed/unchanged counts |
-| .ENV Comparator | `/env-comparator` | Compare two .env files, highlight missing/different keys |
+| .ENV Comparator | `/env-comparator` | Compare two .env files, highlight missing or differing keys |
 
 **Formatters**
 
 | Tool | Route | Description |
 |---|---|---|
+| XML Formatter | `/xml-formatter` | Format/minify XML with tree view and schema visualization |
 | JSON Formatter | `/json-formatter` | Format, minify, sort keys, tree view, schema inference |
 | SQL Formatter | `/sql-formatter` | Format/minify SQL with syntax highlighting, multi-dialect |
+
+**Generators**
+
+| Tool | Route | Description |
+|---|---|---|
+| Regex Tester | `/regex` | Test regex patterns in real-time, view matches & capture groups |
+| Timestamp Converter | `/timestamp` | Unix timestamp ↔ date, auto-detect seconds/milliseconds, relative time |
+| Hash Generator | `/hash` | Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 — supports HMAC |
 
 **Encoders**
 
@@ -40,7 +49,8 @@ npm run build    # production build
 
 - Next.js 16 (App Router) + TypeScript
 - Tailwind CSS v4
-- Ace Editor (`react-ace`) for JSON and SQL input/output panels
+- Ace Editor (`react-ace`) for code input/output panels
 - `sql-formatter` for SQL formatting
+- `xml-formatter` for XML formatting
 - `diff` for line-by-line text comparison
 - `crypto-js` for HMAC signing (works over HTTP/LAN, unlike Web Crypto API)

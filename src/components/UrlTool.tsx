@@ -210,7 +210,7 @@ export default function UrlTool() {
 
           {!parsed && !parseError && (
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Paste URL di atas untuk mulai parse</p>
+              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Paste a URL above to start parsing</p>
             </div>
           )}
 

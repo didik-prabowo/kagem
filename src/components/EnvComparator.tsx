@@ -241,7 +241,7 @@ export default function EnvComparator() {
 
           {entries.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
-              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Paste isi .env di sebelah kiri untuk mulai membandingkan</p>
+              <p className="text-sm font-sans" style={{ color: "#4a4a4a" }}>Paste .env content on the left to start comparing</p>
             </div>
           ) : (
             <div className="flex-1 overflow-auto">
