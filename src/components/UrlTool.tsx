@@ -100,9 +100,10 @@ export default function UrlTool() {
     const result = tryParse(raw);
     if (result) {
       setParsed(result.parsed);
-      setParams(result.params);
+      const freshParams = result.params.map(p => ({ ...p, id: newId() }));
+      setParams(freshParams);
       setParseError("");
-      setReconstructed(buildUrl(result.parsed, result.params));
+      setReconstructed(buildUrl(result.parsed, freshParams));
     } else {
       setParsed(null); setParams([]); setParseError("URL tidak valid");
       setReconstructed("");

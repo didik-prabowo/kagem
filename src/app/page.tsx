@@ -24,6 +24,13 @@ const categories = [
     name: "Formatters",
     tools: [
       {
+        name: "YAML ↔ JSON ↔ .ENV",
+        description: "Convert between YAML, JSON, and .ENV — edit any panel, the others update live",
+        href: "/yaml",
+        icon: "YAML",
+        color: "#dcdcaa",
+      },
+      {
         name: "XML Formatter",
         description: "Format & minify XML dengan syntax highlighting",
         href: "/xml-formatter",
@@ -49,6 +56,13 @@ const categories = [
   {
     name: "Generators",
     tools: [
+      {
+        name: "UUID Generator",
+        description: "Generate UUID v4 (random) and v7 (time-ordered), with format options",
+        href: "/uuid",
+        icon: "UUID",
+        color: "#c586c0",
+      },
       {
         name: "Random String Generator",
         description: "Generate random strings with custom length, charset, and quantity",
@@ -76,6 +90,34 @@ const categories = [
         href: "/hash",
         icon: "#",
         color: "#4ec9b0",
+      },
+      {
+        name: "Lorem Ipsum Generator",
+        description: "Generate placeholder text by paragraphs, sentences, or words — with HTML output option",
+        href: "/lorem",
+        icon: "Li",
+        color: "#9b59b6",
+      },
+      {
+        name: "Color Converter",
+        description: "Convert HEX ↔ RGB ↔ HSL ↔ HSV ↔ CMYK, color picker, shades, contrast ratio",
+        href: "/color",
+        icon: "RGB",
+        color: "#e06c75",
+      },
+      {
+        name: "Cron Parser",
+        description: "Parse cron expressions, view field breakdown, next N run times, human-readable description",
+        href: "/cron",
+        icon: "*/n",
+        color: "#61afef",
+      },
+      {
+        name: "Number Base Converter",
+        description: "Convert between binary, octal, decimal, hex — bit visualization, custom base, powers of 2",
+        href: "/base",
+        icon: "0x",
+        color: "#98c379",
       },
     ],
   },

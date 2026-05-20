@@ -73,6 +73,7 @@ All logic in `src/components/UrlTool.tsx`. Two tabs: **Parser** and **Encoder**.
 - Query params rendered as an editable key/value table — editing any row or adding/removing a row immediately rebuilds the URL via `buildUrl()`.
 - Reconstructed URL shown at bottom with a Copy button.
 - "Use example" button loads a sample URL with multiple query params.
+- **Key bug:** `tryParse()` assigned param IDs from a local counter (always starting at `"0"`), colliding with `idRef` which also starts at `0`. Fixed by re-mapping parsed params through `newId()` in `handleUrlInput`.
 
 **Encoder tab:**
 - Split panel — plain textarea (left) + readonly encoded output (right), computed inline via `doEncode()`.
@@ -171,6 +172,93 @@ All logic in `src/components/JwtTool.tsx`. Two tabs: **Decoder** and **Encoder**
 - Clears generated token when any input is empty.
 
 **Key detail:** `b64urlDecode/b64urlEncode` handle the `+→-`, `/→_`, padding differences between standard Base64 and JWT's base64url encoding.
+
+### Lorem Ipsum Generator (`/lorem`)
+
+All logic in `src/components/LoremIpsum.tsx`. No external dependencies.
+
+**Layout:** settings panel (280px left) + read-only output textarea (right, Georgia serif font).
+
+**Key details:**
+- Mode selector: Paragraphs | Sentences | Words — each has a per-mode count max (20 / 50 / 200).
+- "Start with Lorem ipsum..." checkbox prepends the classic opening sentence.
+- "Wrap with HTML `<p>` tags" checkbox wraps output in `<p>` elements.
+- Output regenerates on every settings change AND on manual "Regenerate" button click (via a `tick` counter that forces `useEffect` to re-run even when other deps are unchanged).
+- Word/char count shown in output toolbar.
+
+### Color Converter (`/color`)
+
+All logic in `src/components/ColorConverter.tsx`. No external dependencies — pure color math.
+
+**Layout:** left panel (300px, inputs) + right panel (formats + shades + contrast).
+
+**Key details:**
+- Internal state is `[r, g, b]` — all other representations are derived.
+- Text input auto-detects format: `#hex`, `rgb()`, `hsl()`, or bare `r g b` numbers.
+- RGB and HSL sliders each have a number input alongside the range.
+- 8 format outputs: HEX, HEX (upper), RGB, HSL, HSV/HSB, CMYK, CSS variable, Tailwind `bg-[]`.
+- Shade strip: 9 swatches at lightness 10%–90% (same hue & saturation) — click any to select.
+- Contrast checker: WCAG AA/AAA badges vs white and black backgrounds.
+- `fgColor(r,g,b)` uses relative luminance to pick black or white text on the swatch preview.
+
+### Cron Parser (`/cron`)
+
+All logic in `src/components/CronParser.tsx`. No external dependencies.
+
+**Layout:** left panel (300px, input + breakdown + presets) + right panel (description + run list).
+
+**Key details:**
+- Supports `@yearly`, `@monthly`, `@weekly`, `@daily`, `@midnight`, `@hourly` macros (expanded before parsing).
+- `parseField()` handles `*`, `n`, `n-m`, `*/step`, `n/step`, `n-m/step`, comma lists.
+- `nextRuns()` iterates minute-by-minute (up to 300 000 iterations); advances by month/day/hour in bulk to skip non-matching ranges efficiently.
+- Day-of-month vs day-of-week OR logic: when both fields are restricted (not `*`), a time matches if either condition is true (standard cron behavior).
+- `buildDescription()` produces a human-readable sentence; handles step patterns, multi-value lists, and common shortcuts.
+- Count selector: 5 / 10 / 20 / 50 next runs. Local timezone name shown in header.
+
+### Number Base Converter (`/base`)
+
+All logic in `src/components/BaseConverter.tsx`. No external dependencies.
+
+**Layout:** left panel (300px, base inputs + bit width + custom base) + right panel (bit viewer + powers-of-2 table).
+
+**Key details:**
+- Internal state: `lastValid` (number) + raw string per field. Editing any field parses it and spreads the new value to all other fields.
+- `parseNum()` accepts optional leading `-`, spaces/underscores as separators (stripped before parsing).
+- Binary input display groups bits into nibbles with spaces (visual only — underscores stripped on parse).
+- Bit viewer (`BitViewer`): shows 8/16/32-bit two's complement pattern. Bits colored by value (1 = blue, 0 = dim), grouped into nibbles with alternating dark backgrounds. Byte hex labels below for 16/32-bit modes.
+- Custom base (2–36): separate input pair — changing the base immediately reconverts `lastValid`.
+- Powers-of-2 table: 2^0 through 2^32, "use" button loads that value into all fields.
+- Precision limited to JS `Number` (~53-bit integers); no BigInt to avoid TypeScript ES2020 target issues.
+
+### YAML ↔ JSON ↔ .ENV (`/yaml`)
+
+All logic in `src/components/YamlJsonConverter.tsx`. Uses `js-yaml`. `YamlAceWrapper.tsx` is the Ace wrapper with YAML mode.
+
+**Layout:** three equal panels (YAML | JSON | .ENV), each with a toolbar.
+
+**Key details:**
+- `Source` type is `"yaml" | "json"` only — .ENV is output-only (read-only textarea, no Paste button).
+- Editing either YAML or JSON panel parses it, serializes to the other format, and derives .ENV via `flattenObj()`.
+- `.ENV is read-only` because the format is inherently flat — round-tripping YAML/JSON → .ENV → YAML/JSON loses nested structure.
+- `flattenObj()` recursively flattens nested objects to `UPPER_SNAKE_CASE` keys; values with spaces/special chars are quoted.
+
+### UUID Generator (`/uuid`)
+
+All logic in `src/components/UuidGenerator.tsx`. No external dependencies — uses `crypto.getRandomValues()`.
+
+**Key details:**
+- v4: random bytes from `crypto.getRandomValues()`, set version bits `b[6] = (b[6] & 0x0f) | 0x40` and variant bits `b[8] = (b[8] & 0x3f) | 0x80`.
+- v7: timestamp-ordered. Timestamp bytes written with a loop (`for i=5..0: b[i] = t%256; t = floor(t/256)`) to avoid BigInt literals (TypeScript target < ES2020 rejects the `n` suffix).
+- Format options: uppercase, no hyphens, braces `{}`.
+
+### Random String Generator (`/random-string`)
+
+All logic in `src/components/RandomStringGenerator.tsx`. Uses `crypto.getRandomValues()` for cryptographic randomness.
+
+**Key details:**
+- Charset toggles: A–Z, a–z, 0–9, symbols (`!@#$%^&*`), exclude ambiguous chars (`0O1lI`), custom extra chars.
+- Length slider (1–256) + number input, quantity 1–50.
+- Generates all strings at once, displays as a copyable list with individual + bulk Copy buttons.
 
 ### Text Comparator (`/text-comparator`)
 
