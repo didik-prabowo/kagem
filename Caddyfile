@@ -1,0 +1,16 @@
+# Serves the static export. TLS is terminated by whatever sits in front.
+{
+	admin off
+}
+
+:8080 {
+	root * /srv
+	encode zstd gzip
+	# /json-formatter → json-formatter.html, as next export writes it
+	try_files {path} {path}.html {path}/index.html
+	file_server
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+}
