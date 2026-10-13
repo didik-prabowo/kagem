@@ -105,6 +105,15 @@ All logic in `src/components/GraphqlFormatter.tsx`, cloned from SQL Formatter (s
 - Left toolbar mirrors JSON Formatter: Format, Minify | Undo, Redo | Copy, Paste, Use example, Clear — same `stackRef`/`idxRef` undo stack (batch ops only).
 - Right panel tabs mirror JSON Formatter: **Tree View** (AST → generic `Item` tree via `defItem()`/`selItems()`, rendered by `GqlNode`, expand/collapse all via `TreeCtx`), **Formatted** (read-only Ace), **Schema** (`SchemaView`: one card per definition with kind badge + variables/fields).
 
+### PDF → CSV (`/pdf-to-csv`)
+
+UI in `src/components/PdfToCsv.tsx`; pure extraction logic in `src/components/pdfTable.ts` (no DOM, so it can be checked in Node with `pdfjs-dist/legacy`).
+
+- `pdfjs-dist` is imported dynamically inside `extractPages()` (it touches browser globals at import). Worker via `new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url)` — bundled as a static asset, works with `output: "export"`.
+- `itemsToRows(items, gap)`: rows = items sharing a baseline; cells = items closer than `gap` pt; columns = union of cell x-spans, computed per block of consecutive multi-cell rows (`alignColumns()`) so headings/numbered lists don't merge a table's columns; handles right-aligned numbers. Cells assigned to a column by their left x. Heuristic only — no ruling-line detection, no OCR (scanned PDFs show a "no text" message).
+- `toCsv()` quotes values containing the delimiter, quotes or newlines. Download prepends a UTF-8 BOM for Excel.
+- "Use example" uses `examplePdf()`, a hand-built one-page PDF string — no binary in the repo.
+
 ### XML Formatter (`/xml-formatter`)
 
 All logic in `src/components/XmlFormatter.tsx`. Uses the `xml-formatter` npm package. `XmlAceWrapper.tsx` is the Ace wrapper with XML mode (same pattern as `SqlAceWrapper.tsx`).

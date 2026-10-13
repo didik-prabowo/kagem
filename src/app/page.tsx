@@ -58,6 +58,13 @@ const categories = [
         icon: "GQL",
         color: "#e535ab",
       },
+      {
+        name: "PDF → CSV",
+        description: "Extract tables from PDF into CSV — runs in the browser, nothing uploaded",
+        href: "/pdf-to-csv",
+        icon: "PDF",
+        color: "#f14c4c",
+      },
     ],
   },
   {
