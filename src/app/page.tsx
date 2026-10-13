@@ -51,6 +51,13 @@ const categories = [
         icon: "SQL",
         color: "#569cd6",
       },
+      {
+        name: "GraphQL Formatter",
+        description: "Format & minify GraphQL queries and schemas",
+        href: "/graphql-formatter",
+        icon: "GQL",
+        color: "#e535ab",
+      },
     ],
   },
   {

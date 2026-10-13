@@ -98,6 +98,13 @@ All logic in `src/components/SqlFormatter.tsx`. Uses the `sql-formatter` npm pac
 - Right toolbar: icon Copy button only.
 - Clipboard fallback same pattern as other tools.
 
+### GraphQL Formatter (`/graphql-formatter`)
+
+All logic in `src/components/GraphqlFormatter.tsx`, cloned from SQL Formatter (same `input`/`formatted` split). Uses the official `graphql` package: `print(parse())` to format, `stripIgnoredCharacters()` to minify. `GraphqlAceWrapper.tsx` uses Ace `graphqlschema` mode. Parse errors (with line/column) shown in the right panel.
+
+- Left toolbar mirrors JSON Formatter: Format, Minify | Undo, Redo | Copy, Paste, Use example, Clear — same `stackRef`/`idxRef` undo stack (batch ops only).
+- Right panel tabs mirror JSON Formatter: **Tree View** (AST → generic `Item` tree via `defItem()`/`selItems()`, rendered by `GqlNode`, expand/collapse all via `TreeCtx`), **Formatted** (read-only Ace), **Schema** (`SchemaView`: one card per definition with kind badge + variables/fields).
+
 ### XML Formatter (`/xml-formatter`)
 
 All logic in `src/components/XmlFormatter.tsx`. Uses the `xml-formatter` npm package. `XmlAceWrapper.tsx` is the Ace wrapper with XML mode (same pattern as `SqlAceWrapper.tsx`).

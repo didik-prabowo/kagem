@@ -21,6 +21,7 @@ Personal browser-based toolkit for daily development needs. Built with Next.js, 
 | XML Formatter | `/xml-formatter` | Format/minify XML with tree view and schema visualization |
 | JSON Formatter | `/json-formatter` | Format, minify, sort keys, tree view, schema inference |
 | SQL Formatter | `/sql-formatter` | Format/minify SQL with syntax highlighting, multi-dialect |
+| GraphQL Formatter | `/graphql-formatter` | Format/minify GraphQL queries & schemas |
 
 **Generators**
 
@@ -59,6 +60,7 @@ npm run build    # production build
 - Ace Editor (`react-ace`) for code input/output panels
 - `js-yaml` for YAML parsing/serialization
 - `sql-formatter` for SQL formatting
+- `graphql` for GraphQL formatting (`parse` + `print`)
 - `xml-formatter` for XML formatting
 - `diff` for line-by-line text comparison
 - `crypto-js` for HMAC signing (works over HTTP/LAN, unlike Web Crypto API)
